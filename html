@@ -1,0 +1,138 @@
+document.body.innerHTML = `
+<main id="game"></main>
+`;
+
+const passos = [
+  {
+    id: 0,
+    ativo: true,
+    imagem:
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200",
+    texto: `
+      Um dia desses, dentro de um livro da biblioteca da escola,
+      eu descobri uma carta antiga sobre uma cidade perdida,
+      escondida por riquezas e belezas naturais.
+      Nessa carta, a autora deixa algumas pistas para encontrar
+      essa cidade e eu decidi segui-las!
+    `,
+    botoes: [
+      { texto: "Rio de Janeiro", proximo: 1 },
+      { texto: "Pernambuco", proximo: 2 },
+    ],
+  },
+
+  {
+    id: 1,
+    texto: `
+      Você começa sua jornada no Rio de Janeiro,
+      subindo o Pico da Tijuca ao amanhecer
+      para encontrar a primeira pista.
+    `,
+    botoes: [
+      { texto: "Procurar a pista no topo do pico", proximo: 3 },
+      { texto: "Desistir e voltar para casa", proximo: 4 },
+    ],
+  },
+
+  {
+    id: 2,
+    texto: `
+      Em Pernambuco, você encontra antigas ruínas,
+      mas percebe que a pista verdadeira não está ali.
+    `,
+    botoes: [{ texto: "Voltar ao início", proximo: 0 }],
+  },
+
+  {
+    id: 3,
+    texto: `
+      No topo do Pico da Tijuca,
+      você encontra uma antiga inscrição apontando
+      que a próxima pista está localizada no Amazonas.
+    `,
+    botoes: [{ texto: "Seguir para o Amazonas", proximo: 5 }],
+  },
+
+  {
+    id: 4,
+    texto: `
+      Você decidiu desistir da aventura e voltar para casa.
+    `,
+    botoes: [{ texto: "Recomeçar", proximo: 0 }],
+  },
+
+  {
+    id: 5,
+    texto: `
+      No Amazonas, a busca pela cidade perdida se intensifica.
+      Você se depara com um rio bifurcado.
+    `,
+    botoes: [
+      { texto: "Seguir pelo rio à esquerda", proximo: 6 },
+      { texto: "Seguir pelo rio à direita", proximo: 7 },
+    ],
+  },
+
+  {
+    id: 6,
+    texto: `
+      Retornando e escolhendo o rio à esquerda,
+      você finalmente encontra a cachoeira escondida
+      e as inscrições que levam à cidade perdida.
+    `,
+    botoes: [{ texto: "Explorar a cidade perdida", proximo: 8 }],
+  },
+
+  {
+    id: 7,
+    texto: `
+      O rio à direita termina em uma área pantanosa.
+      Apesar das belas vistas, não há sinais da cidade perdida aqui.
+    `,
+    botoes: [{ texto: "Retornar e tentar o outro rio", proximo: 6 }],
+  },
+
+  {
+    id: 8,
+    titulo: "🏆 Parabéns!",
+    texto: `
+      Você encontrou a cidade perdida escondida
+      entre as montanhas e cachoeiras da floresta!
+    `,
+    botoes: [{ texto: "Jogar Novamente", proximo: 0 }],
+  },
+];
+
+const game = document.getElementById("game");
+
+function renderizarPasso(id) {
+  const passo = passos.find((p) => p.id === id);
+
+  game.innerHTML = `
+    <div class="passo">
+      ${
+        passo.imagem
+          ? `<img src="${passo.imagem}" alt="Imagem da aventura" width="100%">`
+          : ""
+      }
+
+      ${passo.titulo ? `<h1>${passo.titulo}</h1>` : ""}
+
+      <p>${passo.texto}</p>
+
+      <div class="botoes">
+        ${passo.botoes
+          .map(
+            (botao) => `
+          <button onclick="renderizarPasso(${botao.proximo})">
+            ${botao.texto}
+          </button>
+        `
+          )
+          .join("")}
+      </div>
+    </div>
+  `;
+}
+
+renderizarPasso(0);
